@@ -110,6 +110,10 @@ public class PokedexService {
 				.orElseThrow(() -> new NoSuchElementException(
 				"Pokemon with ID=" + pokemonId + " was not found."));
 	}
+	 public Move findMoveById(Long moveId) {
+	        Optional<Move> optionalMove = moveDao.findById(moveId);
+	        return optionalMove.orElseThrow(() -> new NoSuchElementException("Move not found with ID: " + moveId));
+	    }
 	
 	@Transactional(readOnly = true)
 	public PokemonData retrievePokemonForTrainer(Long trainerId, Long pokemonId) {
@@ -185,6 +189,21 @@ public class PokedexService {
 	        pokemonDataList.add(new PokemonData(pokemon));
 	    }
 	    return pokemonDataList;
+	}
+	@Transactional(readOnly = true)
+	public MoveData retrieveMoveById(Long moveId) {
+	    Move move = findMoveById(moveId);
+	    return new MoveData(move);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<MoveData> retrieveAllMoves() {
+	    List<Move> moveList = moveDao.findAll();
+	    List<MoveData> moveDataList = new ArrayList<>();
+	    for (Move move : moveList) {
+	        moveDataList.add(new MoveData(move));
+	    }
+	    return moveDataList;
 	}
 	
 }
