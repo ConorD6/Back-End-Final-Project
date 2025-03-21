@@ -88,6 +88,11 @@ public class PokedexController {
 	    PokemonData pokemonData = pokedexService.retrievePokemonById(id);
 	    return ResponseEntity.ok(pokemonData);
 	}
+	@GetMapping("/move/{id}")
+	public ResponseEntity<MoveData> getMoveById(@PathVariable Long id) {
+	    MoveData moveData = pokedexService.retrieveMoveById(id);
+	    return ResponseEntity.ok(moveData);
+	}
 
 	@DeleteMapping("/trainer/{trainerId}")
 	public Map<String, String> deleteTrainerById(@PathVariable Long trainerId) {
